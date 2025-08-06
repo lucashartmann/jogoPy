@@ -242,4 +242,4 @@ class Jogo(App):
     }
           
     def on_mount(self):
-        self.push_screen("tela_loja")
+        self.push_screen("tela_inicial")
