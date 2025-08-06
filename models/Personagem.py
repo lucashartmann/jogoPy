@@ -6,6 +6,7 @@ class Personagem():
         self.sala = Cena("Entrada")
         self.inventario = dict()
         self.item_equipado = None
+        self.vida = 100
 
     def coletar_item(self, nome_item):
         item_coletado = self.sala.coletar_item(nome_item)

@@ -55,6 +55,7 @@ class TelaLoja(Screen):
   """
 
     def compose(self):
+        yield Header(show_clock=False)
         with HorizontalGroup():
             yield Label(self.caminho, classes="caminho")
             yield Label(self.caminho, classes="caminho")
@@ -71,7 +72,8 @@ class TelaLoja(Screen):
                 yield Label(self.caminho, classes="caminho2")
                 yield Label("🚧🚧🌳", classes="caminho2")
                 yield Label(self.caminho_vertical, classes="caminho_vertical")
-
+        yield Footer(show_command_palette=False)
+        
     def on_key(self, evento: Key):
         lbl = self.query_one("#cacador")
         self.screen.app.movimentacao(evento, lbl, self.cacador_padding)
