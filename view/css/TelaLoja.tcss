@@ -53,11 +53,11 @@ ListItem {
     padding: 7 0 0 0;
 }
 
-#casa {
+#loja_itens {
     padding: 0 0 0 0;
 }
 
-#casa2 {
+#casa_tijolos {
     padding: 2 0 0 0;
 }
 
@@ -72,3 +72,4 @@ ListItem {
 .caminho_vertical {
     padding: 1 0 0 0;
 }
+

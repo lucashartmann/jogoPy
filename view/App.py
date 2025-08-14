@@ -23,11 +23,11 @@ class Jogo(App):
         Binding("z", "a1", "Interagir"),
         Binding("c", "c", "Abrir inventário"),
         Binding("x", "x", "Equipar item"),
-        Binding("q", "exit()", "Encerrar")  # Fazer funcionar
+        Binding("q", "exit", "Encerrar")  # Fazer funcionar
     ]
 
     def on_mount(self):
-        self.push_screen("fase_inicial")
+        self.push_screen("tela_inicial")
 
     def abrir_inventario(self):
         if Init.inventario_aberto:
@@ -39,6 +39,9 @@ class Jogo(App):
                 self.query_one("#inventario").mount(Static(
                     f"{item.get_icon()}   - {item.get_nome().capitalize()}", classes="item_inventario"))
             Init.inventario_aberto = True
+    
+    def action_exit(self):
+        self.app.exit()
 
     def action_x(self):
         if Init.cacador.inventario:

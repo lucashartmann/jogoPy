@@ -8,6 +8,7 @@ from textual.screen import Screen
 from textual.events import Key
 from textual.binding import Binding
 from models import Init
+import platform
 
 
 class TelaLoja(Screen):
@@ -15,7 +16,7 @@ class TelaLoja(Screen):
 
     cacador_padding = [0, 0, 0, 0]
 
-    casa2 = f'''
+    casa_tijolos = f'''
     🧱🧱🧱🧱🧱🧱🧱
     🧱🪟 🪟 🧱🪟 🪟 🧱
     🧱🪟 🪟 🧱🪟 🪟 🧱
@@ -26,7 +27,7 @@ class TelaLoja(Screen):
     caminho = f'''🚧🚧🚧🌳🚧🚧🚧🌳🚧🚧🌳🚧🚧🚧
     '''
 
-    casa = f"""
+    loja_itens = f"""
         /\\
        /  \\
       /    \\
@@ -37,7 +38,7 @@ class TelaLoja(Screen):
    |____🧝____| 
     """
 
-    casa3 = f"""
+    casa_ascii = f"""
                    /\\
                   /  \\ 
                  /    \\ 
@@ -72,19 +73,37 @@ class TelaLoja(Screen):
   🚧
   🚧
   """
+  
+
+    def sistema_operacional(self):
+        if platform.system() == "Windows":
+            versao = platform.release()
+            if versao == "11":
+                return True
+        return False
+
     
     def on_screen_resume(self):
         Init.lbl_cacador = self.query_one("#cacador")
         Init.cacador_padding = [0, 0, 0, 0]
+    
+    def on_mount(self):
+        if self.sistema_operacional() == False:
+            for wigdt in self.query(".caminho"):
+                wigdt.styles.padding = [14, 0, 0, 0]
+            self.query_one("#loja_itens", Label).styles.padding = [6, 0, 0, 0]
 
     def compose(self):
         yield Header(show_clock=False)
         with HorizontalGroup():
             yield Label(self.caminho, classes="caminho")
             yield Label(self.caminho, classes="caminho")
-            yield Label(self.casa, id="casa")
+            yield Label(self.loja_itens, id="loja_itens")
             yield Label(self.caminho, classes="caminho")
-            yield Label(self.casa2, id="casa2")
+            if self.sistema_operacional() == True:
+                yield Label(self.casa_tijolos, id="casa_tijolos")
+            else:
+                yield Label(self.casa_ascii, id="casa_ascii")
             yield Label(self.sol, id="sol")
         with VerticalGroup():
             yield Label("👮", id="cacador")
@@ -108,10 +127,13 @@ class Loja(Screen):
     CSS_PATH = "css/TelaLoja.tcss"
 
     BINDINGS = [
-        Binding("z", "comprar", "Comprar"),
-        Binding("x", "app.switch_screen('tela_loja')", "Sair"),
-        Binding("q", "exit()", "Encerrar")  # Fazer funcionar
+        Binding("z", "a1", "Sair"),
+        Binding("x", "comprar", "Comprar"),
     ]
+    
+    def on_key(self, evento: Key):
+        if evento.key == "z":
+            self.app.switch_screen('tela_loja')
 
     descricoes = {
         "Rocha": "Uma simples rocha, útil para arremessar ou bloquear caminhos.",
@@ -135,10 +157,13 @@ class Loja(Screen):
     item_highlited = None
 
     def action_comprar(self):
-        self.lista_items.remove(self.item_highlited)
-        self.atualizar_view()
-        Init.cacador.inventario[self.item_highlited.get_nome()] = self.item_highlited
-        self.notify(f"{self.item_highlited.get_nome()} comprado!")
+        if self.item_highlited:
+            self.lista_items.remove(self.item_highlited)
+            self.atualizar_view()
+            Init.cacador.inventario[self.item_highlited.get_nome()] = self.item_highlited
+            self.notify(f"{self.item_highlited.get_nome()} comprado!")
+        else:
+            self.notify("Selecione um item para comprar")
 
     def atualizar_view(self):
         list_view = self.query_one("#lst_item", ListView)
