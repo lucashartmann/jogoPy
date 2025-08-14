@@ -25,7 +25,7 @@ class Jogo(App):
     ]
 
     def on_mount(self):
-        self.push_screen("tela_loja")
+        self.push_screen("tela_inicial")
 
     def movimentacao(self, evento, label, cacador_padding):
         match evento.key:
