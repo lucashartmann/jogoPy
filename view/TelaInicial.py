@@ -2,10 +2,10 @@ from textual.widgets import Header, Footer, Static, Button
 from textual.screen import Screen
 from textual.containers import VerticalGroup
 
+
 class TelaInicial(Screen):
     CSS_PATH = "css/TelaInicial.tcss"
 
-   
     titulo = '''
 ██████╗░██╗░░░██╗███╗░░██╗░██████╗░███████╗░█████╗░██╗░░░██╗███╗░░██╗
 ██╔══██╗██║░░░██║████╗░██║██╔════╝░██╔════╝██╔══██╗██║░░░██║████╗░██║

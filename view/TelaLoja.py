@@ -3,10 +3,12 @@ from textual.widgets import Label, ListItem, ListView, Footer, Header, TextArea
 from models.Item import Item
 from textual.events import Load
 from textual import on
-from textual.containers import HorizontalGroup, VerticalGroup
+from textual.containers import HorizontalGroup, VerticalGroup, Container
 from textual.screen import Screen
 from textual.events import Key
 from textual.binding import Binding
+from models import Init
+import platform
 
 
 class TelaLoja(Screen):
@@ -14,7 +16,7 @@ class TelaLoja(Screen):
 
     cacador_padding = [0, 0, 0, 0]
 
-    casa2 = f'''
+    casa_tijolos = f'''
     🧱🧱🧱🧱🧱🧱🧱
     🧱🪟 🪟 🧱🪟 🪟 🧱
     🧱🪟 🪟 🧱🪟 🪟 🧱
@@ -25,7 +27,7 @@ class TelaLoja(Screen):
     caminho = f'''🚧🚧🚧🌳🚧🚧🚧🌳🚧🚧🌳🚧🚧🚧
     '''
 
-    casa = f"""
+    loja_itens = f"""
         /\\
        /  \\
       /    \\
@@ -36,7 +38,7 @@ class TelaLoja(Screen):
    |____🧝____| 
     """
 
-    casa3 = f"""
+    casa_ascii = f"""
                    /\\
                   /  \\ 
                  /    \\ 
@@ -71,15 +73,37 @@ class TelaLoja(Screen):
   🚧
   🚧
   """
+  
+
+    def sistema_operacional(self):
+        if platform.system() == "Windows":
+            versao = platform.release()
+            if versao == "11":
+                return True
+        return False
+
+    
+    def on_screen_resume(self):
+        Init.lbl_cacador = self.query_one("#cacador")
+        Init.cacador_padding = [0, 0, 0, 0]
+    
+    def on_mount(self):
+        if self.sistema_operacional() == False:
+            for wigdt in self.query(".caminho"):
+                wigdt.styles.padding = [14, 0, 0, 0]
+            self.query_one("#loja_itens", Label).styles.padding = [6, 0, 0, 0]
 
     def compose(self):
         yield Header(show_clock=False)
         with HorizontalGroup():
             yield Label(self.caminho, classes="caminho")
             yield Label(self.caminho, classes="caminho")
-            yield Label(self.casa, id="casa")
+            yield Label(self.loja_itens, id="loja_itens")
             yield Label(self.caminho, classes="caminho")
-            yield Label(self.casa2, id="casa2")
+            if self.sistema_operacional() == True:
+                yield Label(self.casa_tijolos, id="casa_tijolos")
+            else:
+                yield Label(self.casa_ascii, id="casa_ascii")
             yield Label(self.sol, id="sol")
         with VerticalGroup():
             yield Label("👮", id="cacador")
@@ -91,12 +115,10 @@ class TelaLoja(Screen):
                 yield Label("🚧🚧🌳", classes="caminho2")
                 yield Label(self.caminho_vertical, classes="caminho_vertical")
         yield Footer(show_command_palette=False)
-        
+
     def on_key(self, evento: Key):
-        lbl = self.query_one("#cacador")
-        self.screen.app.movimentacao(evento, lbl, self.cacador_padding)
         if evento.key == "z":
-            if self.cacador_padding >= [0, 0, 0, 58] and self.cacador_padding <= [0, 0, 0, 68]:
+            if Init.cacador_padding >= [0, 0, 0, 58] and Init.cacador_padding <= [0, 0, 0, 68]:
                 self.app.switch_screen("loja")
 
 
@@ -104,6 +126,11 @@ class Loja(Screen):
 
     CSS_PATH = "css/TelaLoja.tcss"
 
+    BINDINGS = [
+        Binding("z", "a1", "Sair"),
+        Binding("x", "comprar", "Comprar"),
+    ]
+    
     def on_key(self, evento: Key):
         if evento.key == "z":
             self.app.switch_screen('tela_loja')
@@ -127,6 +154,23 @@ class Loja(Screen):
     TITLE = "🧝 Loja do Elfo"
 
     lista_items = []
+    item_highlited = None
+
+    def action_comprar(self):
+        if self.item_highlited:
+            self.lista_items.remove(self.item_highlited)
+            self.atualizar_view()
+            Init.cacador.inventario[self.item_highlited.get_nome()] = self.item_highlited
+            self.notify(f"{self.item_highlited.get_nome()} comprado!")
+        else:
+            self.notify("Selecione um item para comprar")
+
+    def atualizar_view(self):
+        list_view = self.query_one("#lst_item", ListView)
+        list_view.remove_children()
+        for item in self.lista_items:
+            list_view.append(
+                ListItem(Label(item.get_nome().capitalize(), classes="item")))
 
     def on_mount(self):
         for i in range(12):
@@ -152,6 +196,7 @@ class Loja(Screen):
         lista = self.query_one("#lst_item", ListView)
         info = self.query_one("#tx_info", Label)
         nome_item = self.lista_items[lista.index].get_nome().capitalize()
+        self.item_highlited = self.lista_items[lista.index]
         if self.lista_items[lista.index].get_icon() != "":
             if nome_item.split()[1].capitalize() in self.descricoes.keys():
                 info.update(
