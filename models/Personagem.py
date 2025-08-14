@@ -7,6 +7,13 @@ class Personagem():
         self.inventario = dict()
         self.item_equipado = None
         self.vida = 100
+        self.icone = ""
+
+    def get_icone(self):
+        return self.icone
+    
+    def set_icone(self, icone):
+        self.icone = icone
 
     def coletar_item(self, nome_item):
         item_coletado = self.sala.coletar_item(nome_item)

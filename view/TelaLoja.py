@@ -7,6 +7,7 @@ from textual.containers import HorizontalGroup, VerticalGroup
 from textual.screen import Screen
 from textual.events import Key
 from textual.binding import Binding
+from models import cacador, cacador_padding
 
 
 class TelaLoja(Screen):
@@ -94,9 +95,9 @@ class TelaLoja(Screen):
         
     def on_key(self, evento: Key):
         lbl = self.query_one("#cacador")
-        self.screen.app.movimentacao(evento, lbl, self.cacador_padding)
+        self.screen.app.movimentacao(evento, lbl, cacador_padding)
         if evento.key == "z":
-            if self.cacador_padding >= [0, 0, 0, 58] and self.cacador_padding <= [0, 0, 0, 68]:
+            if cacador_padding >= [0, 0, 0, 58] and cacador_padding <= [0, 0, 0, 68]:
                 self.app.switch_screen("loja")
 
 
