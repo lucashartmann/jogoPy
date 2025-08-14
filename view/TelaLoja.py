@@ -3,7 +3,7 @@ from textual.widgets import Label, ListItem, ListView, Footer, Header, TextArea
 from models.Item import Item
 from textual.events import Load
 from textual import on
-from textual.containers import HorizontalGroup, VerticalGroup
+from textual.containers import HorizontalGroup, VerticalGroup, Container
 from textual.screen import Screen
 from textual.events import Key
 from textual.binding import Binding
@@ -72,6 +72,10 @@ class TelaLoja(Screen):
   🚧
   🚧
   """
+    
+    def on_screen_resume(self):
+        Init.lbl_cacador = self.query_one("#cacador")
+        Init.cacador_padding = [0, 0, 0, 0]
 
     def compose(self):
         yield Header(show_clock=False)
@@ -103,9 +107,11 @@ class Loja(Screen):
 
     CSS_PATH = "css/TelaLoja.tcss"
 
-    def on_key(self, evento: Key):
-        if evento.key == "z":
-            self.app.switch_screen('tela_loja')
+    BINDINGS = [
+        Binding("z", "comprar", "Comprar"),
+        Binding("x", "app.switch_screen('tela_loja')", "Sair"),
+        Binding("q", "exit()", "Encerrar")  # Fazer funcionar
+    ]
 
     descricoes = {
         "Rocha": "Uma simples rocha, útil para arremessar ou bloquear caminhos.",
@@ -126,9 +132,22 @@ class Loja(Screen):
     TITLE = "🧝 Loja do Elfo"
 
     lista_items = []
+    item_highlited = None
+
+    def action_comprar(self):
+        self.lista_items.remove(self.item_highlited)
+        self.atualizar_view()
+        Init.cacador.inventario[self.item_highlited.get_nome()] = self.item_highlited
+        self.notify(f"{self.item_highlited.get_nome()} comprado!")
+
+    def atualizar_view(self):
+        list_view = self.query_one("#lst_item", ListView)
+        list_view.remove_children()
+        for item in self.lista_items:
+            list_view.append(
+                ListItem(Label(item.get_nome().capitalize(), classes="item")))
 
     def on_mount(self):
-        Init.lbl_cacador = self.query_one("#cacador")
         for i in range(12):
             self.lista_items.append(Item())
         list_view = self.query_one("#lst_item", ListView)
@@ -152,6 +171,7 @@ class Loja(Screen):
         lista = self.query_one("#lst_item", ListView)
         info = self.query_one("#tx_info", Label)
         nome_item = self.lista_items[lista.index].get_nome().capitalize()
+        self.item_highlited = self.lista_items[lista.index]
         if self.lista_items[lista.index].get_icon() != "":
             if nome_item.split()[1].capitalize() in self.descricoes.keys():
                 info.update(

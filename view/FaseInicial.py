@@ -14,8 +14,11 @@ from models import Init
 class FaseInicial(Screen):
     CSS_PATH = "css/FaseInicial.tcss"
 
-    def on_mount(self):
+    def on_screen_resume(self):
         Init.lbl_cacador = self.query_one("#cacador")
+        Init.cacador_padding = [0, 0, 0, 0]
+
+    def on_mount(self):
         self.atualizar_header()
 
     def atualizar_header(self):
