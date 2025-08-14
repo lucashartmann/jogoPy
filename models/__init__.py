@@ -1,38 +1,43 @@
 from models import Item, Cena, Personagem
+from textual.widgets import Label
 
-cacador_padding = [0, 0, 0, 0]
-zumbi_morto = False
-pode_movimentar = True
-pode_agir = False
-objeto_iteracao = ""
-inventario_aberto = False
+class Init:
 
-sala_inicial = Cena.Cena("Sala Inicial")
+    lbl_cacador = Label() 
 
-cacador = Personagem.Personagem()
-cacador.sala = sala_inicial
-cacador.set_icone("👮")
+    cacador_padding = [0, 0, 0, 0]
+    zumbi_morto = False
+    pode_movimentar = True
+    pode_agir = False
+    objeto_iteracao = ""
+    inventario_aberto = False
 
-contador = len(list(cacador.inventario.keys())) - 1
+    sala_inicial = Cena.Cena("Sala Inicial")
 
-chave = Item.Item()
-chave.set_nome("chave")
-chave.set_categoria("item_comum")
-chave.set_icon("🗝️")
-chave.set_dano(0)
-chave.set_protecao(0)
-chave.set_genero_objeto("feminino")
-chave.set_quant(1)
+    cacador = Personagem.Personagem()
+    cacador.sala = sala_inicial
+    cacador.set_icone("👮")
 
-sala_inicial.colocar_item(chave)
+    contador = len(list(cacador.inventario.keys())) - 1
 
-espada = Item.Item()
-espada.set_nome("espada")
-espada.set_categoria("arma")
-espada.set_icon("🗡️")
-espada.set_dano(5)
-espada.set_protecao(0)
-espada.set_genero_objeto("feminino")
-espada.set_quant(1)
+    chave = Item.Item()
+    chave.set_nome("chave")
+    chave.set_categoria("item_comum")
+    chave.set_icon("🗝️")
+    chave.set_dano(0)
+    chave.set_protecao(0)
+    chave.set_genero_objeto("feminino")
+    chave.set_quant(1)
 
-sala_inicial.colocar_item(espada)
+    sala_inicial.colocar_item(chave)
+
+    espada = Item.Item()
+    espada.set_nome("espada")
+    espada.set_categoria("arma")
+    espada.set_icon("🗡️")
+    espada.set_dano(5)
+    espada.set_protecao(0)
+    espada.set_genero_objeto("feminino")
+    espada.set_quant(1)
+
+    sala_inicial.colocar_item(espada)

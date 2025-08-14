@@ -7,7 +7,7 @@ from textual.containers import HorizontalGroup, VerticalGroup
 from textual.screen import Screen
 from textual.events import Key
 from textual.binding import Binding
-from models import cacador, cacador_padding
+from models import Init
 
 
 class TelaLoja(Screen):
@@ -92,12 +92,10 @@ class TelaLoja(Screen):
                 yield Label("🚧🚧🌳", classes="caminho2")
                 yield Label(self.caminho_vertical, classes="caminho_vertical")
         yield Footer(show_command_palette=False)
-        
+
     def on_key(self, evento: Key):
-        lbl = self.query_one("#cacador")
-        self.screen.app.movimentacao(evento, lbl, cacador_padding)
         if evento.key == "z":
-            if cacador_padding >= [0, 0, 0, 58] and cacador_padding <= [0, 0, 0, 68]:
+            if Init.cacador_padding >= [0, 0, 0, 58] and Init.cacador_padding <= [0, 0, 0, 68]:
                 self.app.switch_screen("loja")
 
 
@@ -130,6 +128,7 @@ class Loja(Screen):
     lista_items = []
 
     def on_mount(self):
+        Init.lbl_cacador = self.query_one("#cacador")
         for i in range(12):
             self.lista_items.append(Item())
         list_view = self.query_one("#lst_item", ListView)
