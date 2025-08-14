@@ -19,87 +19,84 @@ class FaseInicial(Screen):
         Init.cacador_padding = [0, 0, 0, 0]
 
     def on_mount(self):
-        self.atualizar_header()
-
-    def atualizar_header(self):
-        self.query_one(Header).icon = f"❤️: {Init.cacador.vida}"
-        if Init.cacador.item_equipado:
-            self.title = f"Item equipado: {Init.cacador.item_equipado.get_icon()}  {Init.cacador.item_equipado.get_nome().capitalize()}"
-        else:
-            self.title = f"Item equipado: Nenhum"
+        self.app.atualizar_header()
 
     def compose(self):
         yield Header(show_clock=False)
         with HorizontalGroup():
             yield Label(Init.chave.get_icon(), id=f"{Init.chave.get_nome()}")
-            yield Label("🧟", id="zumbi")
+            yield Label('🧟', id="zumbi")
+#             yield Label('''10
+#   🧟''', id="zumbi")
             yield Label("🚪", id="porta")
             yield Label(Init.espada.get_icon(), id=f"{Init.espada.get_nome()}")
         yield Label(Init.cacador.icone, id="cacador")
         yield Footer(show_command_palette=False)
 
-
     @work
     async def acoes(self, evento):
-        match evento.key:
-            case "z":
-                if Init.objeto_iteracao != "":
-                    Init.pode_movimentar = False
-                    match Init.objeto_iteracao:
-                        case "zumbi":
-                            if Init.cacador.item_equipado:
-                                if Init.cacador.item_equipado.get_categoria() == "arma":
-                                    await sleep(2)
-                                    self.notify(
-                                        "Entrando em combate com o zumbi")
-                                    self.combate()
-                                else:
-                                    self.notify(
-                                        "Você precisa de uma arma para iniciar o combate")
-                            else:
-                                self.notify(
-                                    "Você precisa de um item equipado para iniciar o combate")
+        if evento.key == "z" and Init.objeto_iteracao != "":
+            Init.pode_movimentar = False
+            match Init.objeto_iteracao:
+                case "zumbi":
+                    if Init.cacador.item_equipado:
+                        if Init.cacador.item_equipado.get_categoria() == "arma":
+                            self.notify(
+                                "Entrando em combate com o zumbi")
+                            await sleep(1)
+                            self.combate()
+                        else:
+                            self.notify(
+                                "Você precisa de uma arma para iniciar o combate")
+                    else:
+                        self.notify(
+                            "Você precisa de um item equipado para iniciar o combate")
 
-                        case "porta":
-                            if Init.cacador.item_equipado:
-                                if Init.cacador.item_equipado.get_nome() == "chave":
-                                    self.app.switch_screen("tela_loja")
-                                else:
-                                    self.notify(
-                                        "Você precisa da chave para abrir a porta")
-                            else:
-                                self.notify(
-                                    "Você precisa de um item equipado para abrir a porta")
+                case "porta":
+                    if Init.cacador.item_equipado:
+                        if Init.cacador.item_equipado.get_nome() == "chave":
+                            self.app.switch_screen("tela_loja")
+                        else:
+                            self.notify(
+                                "Você precisa da chave para abrir a porta")
+                    else:
+                        self.notify(
+                            "Você precisa de um item equipado para abrir a porta")
 
-                        case "chave" | "espada":
-                            if Init.pode_agir:
-                                self.notify(
-                                    f"{Init.objeto_iteracao.capitalize()} coletada")
-                                Init.cacador.coletar_item(Init.objeto_iteracao)
-                                Init.contador = len(
-                                    list(Init.cacador.inventario.keys())) - 1
-                                self.atualizar_header()
-                                self.query_one(
-                                    f"#{Init.objeto_iteracao}").remove()
-                    Init.pode_movimentar = True
-
-           
+                case "chave" | "espada":
+                    if Init.pode_agir:
+                        self.notify(
+                            f"{Init.objeto_iteracao.capitalize()} coletada")
+                        Init.cacador.coletar_item(Init.objeto_iteracao)
+                        Init.contador = len(
+                            list(Init.cacador.inventario.keys())) - 1
+                        self.query_one(
+                            f"#{Init.objeto_iteracao}").remove()
+            Init.pode_movimentar = True
 
     @work
     async def combate(self):
-        # Fazer a classe do personagem com vida e dano. Implementar o dano da arma equipada e etc.
-        self.notify(f"Dano {Init.cacador.item_equipado.get_dano()} no zumbi")
-        await sleep(2)
-        self.notify("Dano 5 no caçador")
-        Init.cacador.vida -= 5
-        await sleep(2)
-        self.notify(f"Dano {Init.cacador.item_equipado.get_dano()} no zumbi")
-        await sleep(2)
-        self.notify("Zumbi morreu")
-        await self.query("#zumbi").remove()
-        Init.pode_movimentar = True
-        Init.zumbi_morto = True
-        self.atualizar_header()
+        vida_zumbi = 10
+        Init.cacador.set_vida(2)
+
+        dano_arma = Init.cacador.item_equipado.get_dano()
+
+        while vida_zumbi > 0 and Init.cacador.get_vida() > 0:
+            vida_zumbi -= dano_arma
+            self.notify(
+                f"Dano {dano_arma} no zumbi, Vida do Zumbi = {vida_zumbi}")
+            await sleep(2)
+            self.notify("Dano 5 no caçador")
+            self.app.atualizar_header()
+            Init.cacador.set_vida(Init.cacador.get_vida() - 5)
+            if vida_zumbi <= 0:
+                self.notify("Zumbi morreu")
+                await self.query("#zumbi").remove()
+                Init.zumbi_morto = True
+            if Init.cacador.get_vida() <= 0:
+                self.app.tela_morte()
+                Init.pode_agir = False
+                Init.pode_movimentar = False
 
     @work
     async def _on_key(self, evento: Key):
@@ -107,9 +104,6 @@ class FaseInicial(Screen):
         Init.pode_agir = False
         lbl = self.query_one("#cacador")
         self.acoes(evento)
-
-        # if Init.pode_movimentar:
-        #     self.screen.app.movimentacao(evento, lbl, Init.cacador_padding)
 
         for lbl in self.query("Label"):
             match lbl.id:
@@ -124,7 +118,7 @@ class FaseInicial(Screen):
                             self.notify("Zumbi encontrado")
                             Init.pode_agir = True
                             Init.objeto_iteracao = "zumbi"
-
+                    
                 case "chave":
                     if Init.cacador_padding == [0, 0, 0, 20]:
                         Init.objeto_iteracao = "chave"

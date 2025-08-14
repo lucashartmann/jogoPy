@@ -73,7 +73,6 @@ class TelaLoja(Screen):
   🚧
   🚧
   """
-  
 
     def sistema_operacional(self):
         if platform.system() == "Windows":
@@ -82,11 +81,10 @@ class TelaLoja(Screen):
                 return True
         return False
 
-    
     def on_screen_resume(self):
         Init.lbl_cacador = self.query_one("#cacador")
         Init.cacador_padding = [0, 0, 0, 0]
-    
+
     def on_mount(self):
         if self.sistema_operacional() == False:
             for wigdt in self.query(".caminho"):
@@ -130,7 +128,7 @@ class Loja(Screen):
         Binding("z", "a1", "Sair"),
         Binding("x", "comprar", "Comprar"),
     ]
-    
+
     def on_key(self, evento: Key):
         if evento.key == "z":
             self.app.switch_screen('tela_loja')
@@ -160,7 +158,8 @@ class Loja(Screen):
         if self.item_highlited:
             self.lista_items.remove(self.item_highlited)
             self.atualizar_view()
-            Init.cacador.inventario[self.item_highlited.get_nome()] = self.item_highlited
+            Init.cacador.inventario[self.item_highlited.get_nome(
+            )] = self.item_highlited
             self.notify(f"{self.item_highlited.get_nome()} comprado!")
         else:
             self.notify("Selecione um item para comprar")
