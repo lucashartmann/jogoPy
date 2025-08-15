@@ -12,3 +12,4 @@ TelaInicial VerticalGroup {
 TelaInicial Button {
     align: center middle;
 }
+

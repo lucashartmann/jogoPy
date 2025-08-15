@@ -1,13 +1,9 @@
-from textual.app import App
-from textual.widgets import Label, Static, Footer, Header
-from textual.containers import HorizontalGroup, Container
+from textual.widgets import Label, Footer, Header
+from textual.containers import HorizontalGroup
 from textual.events import Key
 from asyncio import sleep
 from textual import work
-from models.Personagem import Personagem
 from textual.screen import Screen
-from textual.binding import Binding
-from view.TelaLoja import TelaLoja, Loja
 from models import Init
 
 
@@ -19,6 +15,7 @@ class FaseInicial(Screen):
         Init.cacador_padding = [0, 0, 0, 0]
 
     def on_mount(self):
+        # self.app.tela_morte()
         self.app.atualizar_header()
 
     def compose(self):
@@ -77,7 +74,7 @@ class FaseInicial(Screen):
     @work
     async def combate(self):
         vida_zumbi = 10
-        Init.cacador.set_vida(2)
+        # Init.cacador.set_vida(2)
 
         dano_arma = Init.cacador.item_equipado.get_dano()
 
@@ -118,7 +115,7 @@ class FaseInicial(Screen):
                             self.notify("Zumbi encontrado")
                             Init.pode_agir = True
                             Init.objeto_iteracao = "zumbi"
-                    
+
                 case "chave":
                     if Init.cacador_padding == [0, 0, 0, 20]:
                         Init.objeto_iteracao = "chave"

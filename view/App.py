@@ -1,7 +1,7 @@
 from textual.app import App
 from textual.binding import Binding
 from textual.containers import Container
-from textual.widgets import Static, Header, TextArea, Button
+from textual.widgets import Static, Header, Button, Label
 from view import TelaLoja, TelaInicial, FaseInicial
 from models import Init
 
@@ -25,26 +25,29 @@ class Jogo(App):
         Binding("x", "x", "Equipar item"),
         Binding("q", "exit", "Encerrar")
     ]
-    
+
     def on_mount(self):
-        self.push_screen("fase_inicial")
+        self.push_screen("tela_inicial")
+
+    def compose(self):
+        yield Header()
 
     def abrir_inventario(self):
         if Init.inventario_aberto:
-            self.query_one("#inventario", Container).remove()
+            self.screen.query_one("#inventario", Container).remove()
             Init.inventario_aberto = False
         else:
-            self.mount(Container(id="inventario"))
+            self.screen.mount(Container(id="inventario"))
             for item in Init.cacador.inventario.values():
-                self.query_one("#inventario").mount(Static(
+                self.screen.query_one("#inventario").mount(Static(
                     f"{item.get_icon()}   - {item.get_nome().capitalize()}", classes="item_inventario"))
             Init.inventario_aberto = True
 
     def action_exit(self):
         self.app.exit()
-        
+
     def atualizar_header(self):
-        self.query_one(Header).icon = f"❤️: {Init.cacador.vida}"
+        self.screen.query_one(Header).icon = f"❤️: {Init.cacador.vida}"
         if Init.cacador.item_equipado:
             self.title = f"Item equipado: {Init.cacador.item_equipado.get_icon()}  {Init.cacador.item_equipado.get_nome().capitalize()}"
         else:
@@ -66,15 +69,31 @@ class Jogo(App):
     def action_c(self):
         self.abrir_inventario()
         
-    def tela_morte(self):
-        yield Container("Você Morreu!", id="tx_morte")
-        self.query_one("#tx_morte", Container).mount(Button("Tentar Novamente", id="bt_morte"))
-
-    def on_button_pressed(self):
+    def reiniciar(self):
         Init.cacador.inventario.clear()
         Init.cacador.set_vida(100)
-        self.push_screen("tela_inicial")
-        
+        Init.cacador_padding = [0, 0, 0, 0]  
+        Init.pode_movimentar = True          
+        Init.lbl_cacador = Label()    
+        Init.pode_agir = False   
+        Init.zumbi_morto = False
+        Init.objeto_iteracao = ""
+        Init.inventario_aberto = False    
+
+    def tela_morte(self):
+        self.screen.mount(Container(id="container_morte"))
+        self.screen.query_one("#container_morte", Container).mount(
+            Static("V̶o̶c̶ê̶ M̶o̶r̶r̶e̶u̶", id="stt_morte"))
+        self.screen.query_one("#container_morte", Container).mount(
+            Button("Tentar Novamente", id="bt_morte"))
+
+    async def on_button_pressed(self, evento: Button.Pressed):
+        if evento.button.id == "bt_morte":
+            for screen in self.screen_stack:
+                screen.remove()
+            self.reiniciar()
+            self.push_screen("tela_inicial")
+
     def action_left(self):
         if Init.pode_movimentar:
             if Init.cacador_padding[3] > 0:

@@ -1,9 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Label, ListItem, ListView, Footer, Header, TextArea
+from textual.widgets import Label, ListItem, ListView, Footer, Header
 from models.Item import Item
-from textual.events import Load
 from textual import on
-from textual.containers import HorizontalGroup, VerticalGroup, Container
+from textual.containers import HorizontalGroup, VerticalGroup
 from textual.screen import Screen
 from textual.events import Key
 from textual.binding import Binding
@@ -179,7 +177,7 @@ class Loja(Screen):
             list_view.append(
                 ListItem(Label(item.get_nome().capitalize(), classes="item")))
 
-    def compose(self) -> ComposeResult:
+    def compose(self):
         yield Header()
         with HorizontalGroup(id="ctn_bemvindo"):
             yield Label("🧝")
