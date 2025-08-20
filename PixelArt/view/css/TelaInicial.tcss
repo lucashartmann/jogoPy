@@ -1,0 +1,15 @@
+TelaInicial Static {
+    content-align: center middle;
+    background: magenta;
+    width: 100%;
+}
+
+TelaInicial VerticalGroup {
+    height: 100%;
+    align: center middle;
+}
+
+TelaInicial Button {
+    align: center middle;
+}
+

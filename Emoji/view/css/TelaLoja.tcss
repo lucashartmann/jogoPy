@@ -1,0 +1,75 @@
+ListView {
+        layout: grid;
+        grid-size: 3;
+        grid-gutter: 1;
+        background: rgb(100, 100, 100);
+}
+ListItem {
+        width: 70%;
+        text-align: center;
+        background: rgb(255, 255, 255);
+        height: 99%;
+        align: center middle;
+        margin: 1;
+        margin-left: 11;
+        color: green;
+}
+    
+.item{
+        width: 85%;
+        max-width: 85%;
+}
+    
+#tx_bemvindo {  
+        border: round rgb(255, 255, 255) 50%;
+        width: 20;
+        min-height: 4;
+        max-height: 4;
+}
+    
+#ctn_bemvindo{
+        align: center middle;
+}
+    
+#tx_dot2{
+        border: round rgb(255, 255, 255) 50%;
+        width: 1;
+        min-height: 3;
+        max-height: 3;
+}
+    
+#tx_dot1{
+        border: round rgb(255, 255, 255) 50%;
+        width: 1;
+        min-height: 1;
+        max-height: 1;
+}
+
+#cacador {
+    padding: 0 0 0 0;
+}
+
+.caminho {
+    padding: 7 0 0 0;
+}
+
+#loja_itens {
+    padding: 0 0 0 0;
+}
+
+#casa_tijolos {
+    padding: 2 0 0 0;
+}
+
+.caminho2 {
+    padding: 2 0 0 0;
+}
+
+#caminhos_baixo {
+        height: 10;
+}
+
+.caminho_vertical {
+    padding: 1 0 0 0;
+}
+
