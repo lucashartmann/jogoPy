@@ -1,11 +1,10 @@
-from textual.widgets import Label, Footer, Header, Static
+from textual.widgets import Footer, Header, Static
 from textual.containers import HorizontalGroup
 from textual.events import Key
 from asyncio import sleep
 from textual import work
 from textual.screen import Screen
 from models import Init
-from controller import Controller
 from config import Assets
 
 
@@ -13,21 +12,21 @@ class FaseInicial(Screen):
     CSS_PATH = "css/FaseInicial.tcss"
 
     def on_screen_resume(self):
-        Init.lbl_cacador = self.query_one("#cacador")
         Init.cacador_padding = [0, 0, 0, 0]
+        if Assets.lbl_cacador:  
+            self.mount(Static(Assets.lbl_cacador.renderable, id="cacador"))
 
     def on_mount(self):
         # self.app.tela_morte()
-        self.app.atualizar_header()
+        self.app.atualizar_header()     
 
     def compose(self):
         yield Header(show_clock=False)
         with HorizontalGroup():
             yield Assets.lbl_chave
-            yield Assets.lbl_zumbi
-            yield Assets.lbl_porta
-            yield Assets.lbl_espada
-        yield Assets.lbl_cacador
+            # yield Assets.lbl_zumbi
+            # yield Assets.lbl_porta
+            # yield Assets.lbl_espada
         yield Footer(show_command_palette=False)
 
     @work
@@ -99,7 +98,6 @@ class FaseInicial(Screen):
     async def _on_key(self, evento: Key):
         Init.objeto_iteracao = ""
         Init.pode_agir = False
-        lbl = self.query_one("#cacador")
         self.acoes(evento)
 
         for lbl in self.query("Label"):

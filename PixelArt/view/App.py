@@ -1,8 +1,8 @@
 from textual.app import App
 from textual.binding import Binding
 from textual.containers import Container
-from textual.widgets import Static, Header, Button, Label
-from view import TelaLoja, TelaInicial, FaseInicial
+from textual.widgets import Static, Header, Button
+from view import TelaLoja, TelaInicial, FaseInicial, TelaConfig
 from models import Init
 
 
@@ -12,7 +12,8 @@ class Jogo(App):
         "tela_inicial": TelaInicial.TelaInicial,
         "fase_inicial": FaseInicial.FaseInicial,
         "tela_loja": TelaLoja.TelaLoja,
-        "loja": TelaLoja.Loja
+        "loja": TelaLoja.Loja,
+        "tela_config": TelaConfig.TelaConfig
     }
 
     BINDINGS = [
@@ -68,17 +69,16 @@ class Jogo(App):
 
     def action_c(self):
         self.abrir_inventario()
-        
+
     def reiniciar(self):
         Init.cacador.inventario.clear()
         Init.cacador.set_vida(100)
-        Init.cacador_padding = [0, 0, 0, 0]  
-        Init.pode_movimentar = True          
-        Init.lbl_cacador = Label()    
-        Init.pode_agir = False   
+        Init.cacador_padding = [0, 0, 0, 0]
+        Init.pode_movimentar = True
+        Init.pode_agir = False
         Init.zumbi_morto = False
         Init.objeto_iteracao = ""
-        Init.inventario_aberto = False    
+        Init.inventario_aberto = False
 
     def tela_morte(self):
         self.screen.mount(Container(id="container_morte"))
@@ -101,7 +101,7 @@ class Jogo(App):
             else:
                 Init.cacador_padding[1] += 1
 
-            Init.lbl_cacador.styles.padding = (
+            self.screen.query_one("#cacador", Static).styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
 
     def action_right(self):
@@ -110,7 +110,7 @@ class Jogo(App):
                 Init.cacador_padding[1] -= 1
             else:
                 Init.cacador_padding[3] += 1
-            Init.lbl_cacador.styles.padding = (
+            self.screen.query_one("#cacador", Static).styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
 
     def action_up(self):
@@ -119,7 +119,7 @@ class Jogo(App):
                 Init.cacador_padding[0] -= 1
             else:
                 Init.cacador_padding[2] += 1
-            Init.lbl_cacador.styles.padding = (
+            self.screen.query_one("#cacador", Static).styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
 
     def action_down(self):
@@ -128,5 +128,5 @@ class Jogo(App):
                 Init.cacador_padding[2] -= 1
             else:
                 Init.cacador_padding[0] += 1
-            Init.lbl_cacador.styles.padding = (
+            self.screen.query_one("#cacador", Static).styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])

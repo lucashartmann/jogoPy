@@ -21,10 +21,14 @@ class TelaInicial(ModalScreen):
             yield Static(self.titulo)
             yield Static("𝔘𝔪 𝔡𝔲𝔫𝔤𝔢𝔬𝔫 𝔠𝔯𝔞𝔴𝔩𝔢𝔯 𝔢𝔪 𝔪𝔬𝔡𝔬 𝔱𝔢𝔵𝔱𝔯𝔬")
             yield Button("I̴̢̦͙̓͆̕n̴̼̞͓̓͛͘i̸͉͉͐̔͋c̵̡͖͚̿̓̚i̸̘̪̫̔͆̓a̸̙͚̓͝͝r̸͕̠̦̓̾ J̴̙͓̼͊͌ò̴̫̿͜g̵͙͚͙͑̽͝o̸͉̫͎̐̐̕")
+            yield Button("config", id="bt_config")
         yield Footer(show_command_palette=False)
 
-    def on_button_pressed(self):
-        self.app.switch_screen("fase_inicial")
+    def on_button_pressed(self, evento: Button.Pressed):
+        if evento.button.id == "bt_config":
+            self.app.switch_screen("tela_config")
+        else:
+            self.app.switch_screen("fase_inicial")
 
     def _on_screen_resume(self):
         self.sub_title = "Tela Inicial"

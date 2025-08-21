@@ -1,0 +1,15 @@
+Input {
+    margin: 2;
+}
+
+#hg_resultado {
+    height: 20;
+    width: 50%;
+    background: rgba(93, 93, 93, 1);
+    align: center middle;
+}
+
+
+TelaConfig {
+    align: center middle;
+}
