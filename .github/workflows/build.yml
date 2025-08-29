@@ -27,8 +27,8 @@ jobs:
       - name: Build executable with PyInstaller
         run: |
           pyinstaller --onedir `
-              --add-data "view;view" `
-              Main.py
+              --add-data "Emoji/view;view" `
+              Emoji/Main.py
 
       - name: Fazer upload do artefato
         uses: actions/upload-artifact@v4
