@@ -20,7 +20,7 @@ def resize(caminho, tamanho):
     except ValueError:
         print(caminho)
         print(novo_caminho)
-        return False
+        return False, novo_caminho
     return True, novo_caminho
 
 

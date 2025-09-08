@@ -10,6 +10,8 @@ class TelaConfig(Screen):
     CSS_PATH = "css/TelaConfig.tcss"
     montou = False
 
+    #assets/coracao.png
+
     def compose(self):
         with HorizontalGroup():
             with VerticalGroup():
@@ -25,7 +27,8 @@ class TelaConfig(Screen):
         if evento.button.id == "bt_criar":
             hg = self.query_one("#hg_resultado", HorizontalGroup)
             if self.montou:
-                hg.remove_children()
+                self.query_one(Static).remove()
+                hg.remove_children("#cacador")
             caminho = str(self.query_one("#inpt_caminho", Input).value)
             tamanho = int(self.query_one("#inpt_tamanho", Input).value)
             stt_personagem = Static(Controller.gerar_pixel(
