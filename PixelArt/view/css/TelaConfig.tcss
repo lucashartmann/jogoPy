@@ -1,5 +1,6 @@
 Input {
     margin: 2;
+    width: 10%;
 }
 
 #hg_resultado {

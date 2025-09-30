@@ -11,19 +11,16 @@ from config import Assets
 class FaseInicial(Screen):
     CSS_PATH = "css/FaseInicial.tcss"
 
-    def on_screen_resume(self):
-        Init.cacador_padding = [0, 0, 0, 0]
-        if Assets.lbl_cacador:  
-            self.mount(Static(Assets.lbl_cacador.renderable, id="cacador"))
-
     def on_mount(self):
         # self.app.tela_morte()
-        self.app.atualizar_header()     
+        self.app.atualizar_header()    
+        self.query_one(f"#{Assets.lbl_chave.id}").mount(Assets.lbl_chave_image)
+        self.query_one(f"#{Assets.lbl_cacador.id}").mount(Assets.lbl_image)
 
     def compose(self):
         yield Header(show_clock=False)
-        with HorizontalGroup():
-            yield Assets.lbl_chave
+        yield Assets.lbl_chave
+        yield Assets.lbl_cacador
             # yield Assets.lbl_zumbi
             # yield Assets.lbl_porta
             # yield Assets.lbl_espada

@@ -4,7 +4,7 @@ from textual.containers import Container
 from textual.widgets import Static, Header, Button
 from view import TelaLoja, TelaInicial, FaseInicial, TelaConfig
 from models import Init
-
+from textual_image.widget import Image
 
 class Jogo(App):
 
@@ -101,7 +101,7 @@ class Jogo(App):
             else:
                 Init.cacador_padding[1] += 1
 
-            self.screen.query_one("#cacador", Static).styles.padding = (
+            self.screen.query_one("#cacador").styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
 
     def action_right(self):
@@ -110,7 +110,7 @@ class Jogo(App):
                 Init.cacador_padding[1] -= 1
             else:
                 Init.cacador_padding[3] += 1
-            self.screen.query_one("#cacador", Static).styles.padding = (
+            self.screen.query_one("#cacador").styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
 
     def action_up(self):
@@ -119,7 +119,7 @@ class Jogo(App):
                 Init.cacador_padding[0] -= 1
             else:
                 Init.cacador_padding[2] += 1
-            self.screen.query_one("#cacador", Static).styles.padding = (
+            self.screen.query_one("#cacador").styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
 
     def action_down(self):
@@ -128,5 +128,5 @@ class Jogo(App):
                 Init.cacador_padding[2] -= 1
             else:
                 Init.cacador_padding[0] += 1
-            self.screen.query_one("#cacador", Static).styles.padding = (
+            self.screen.query_one("#cacador").styles.padding = (
                 Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])

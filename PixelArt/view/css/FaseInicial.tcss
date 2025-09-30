@@ -1,6 +1,11 @@
+FaseInicial {
+    layers: below above;
+}
+
 #cacador {
     # margin = (top, right, bottom, left)
     padding: 0 0 0 2;
+    layer: above;
 }
 
 #zumbi {

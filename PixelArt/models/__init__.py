@@ -1,11 +1,6 @@
 from models import Item, Cena, Personagem
-from textual.widgets import Label
-from controller import Controller
-
 
 class Init:
-
-    lbl_cacador = Label(Controller.gerar_pixel("assets/personagem.png", 6), id="cacador")
 
     cacador_padding = [0, 0, 0, 0]
     zumbi_morto = False
