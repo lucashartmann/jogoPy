@@ -2,7 +2,7 @@ from textual.app import App
 from textual.binding import Binding
 from textual.containers import Container
 from textual.widgets import Static, Header, Button, Label
-from view import TelaLoja, TelaInicial, FaseInicial
+from view import TelaLoja, TelaInicial, FaseInicial, TelaCasa
 from models import Init
 
 
@@ -12,7 +12,8 @@ class Jogo(App):
         "tela_inicial": TelaInicial.TelaInicial,
         "fase_inicial": FaseInicial.FaseInicial,
         "tela_loja": TelaLoja.TelaLoja,
-        "loja": TelaLoja.Loja
+        "loja": TelaLoja.Loja,
+        "tela_casa": TelaCasa.TelaCasa
     }
 
     BINDINGS = [
@@ -27,7 +28,7 @@ class Jogo(App):
     ]
 
     def on_mount(self):
-        self.push_screen("tela_inicial")
+        self.push_screen("tela_casa")
 
     def compose(self):
         yield Header()
@@ -68,17 +69,17 @@ class Jogo(App):
 
     def action_c(self):
         self.abrir_inventario()
-        
+
     def reiniciar(self):
         Init.cacador.inventario.clear()
         Init.cacador.set_vida(100)
-        Init.cacador_padding = [0, 0, 0, 0]  
-        Init.pode_movimentar = True          
-        Init.lbl_cacador = Label()    
-        Init.pode_agir = False   
+        Init.cacador_margin = [0, 0, 0, 0]
+        Init.pode_movimentar = True
+        Init.lbl_cacador = Label()
+        Init.pode_agir = False
         Init.zumbi_morto = False
         Init.objeto_iteracao = ""
-        Init.inventario_aberto = False    
+        Init.inventario_aberto = False
 
     def tela_morte(self):
         self.screen.mount(Container(id="container_morte"))
@@ -96,37 +97,37 @@ class Jogo(App):
 
     def action_left(self):
         if Init.pode_movimentar:
-            if Init.cacador_padding[3] > 0:
-                Init.cacador_padding[3] -= 1
+            if Init.cacador_margin[3] > 0:
+                Init.cacador_margin[3] -= 1
             else:
-                Init.cacador_padding[1] += 1
+                Init.cacador_margin[1] += 1
 
-            Init.lbl_cacador.styles.padding = (
-                Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
+            Init.lbl_cacador.styles.margin = (
+                Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
 
     def action_right(self):
         if Init.pode_movimentar:
-            if Init.cacador_padding[1] > 0:
-                Init.cacador_padding[1] -= 1
+            if Init.cacador_margin[1] > 0:
+                Init.cacador_margin[1] -= 1
             else:
-                Init.cacador_padding[3] += 1
-            Init.lbl_cacador.styles.padding = (
-                Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
+                Init.cacador_margin[3] += 1
+            Init.lbl_cacador.styles.margin = (
+                Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
 
     def action_up(self):
         if Init.pode_movimentar:
-            if Init.cacador_padding[0] > 0:
-                Init.cacador_padding[0] -= 1
+            if Init.cacador_margin[0] > 0:
+                Init.cacador_margin[0] -= 1
             else:
-                Init.cacador_padding[2] += 1
-            Init.lbl_cacador.styles.padding = (
-                Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
+                Init.cacador_margin[2] += 1
+            Init.lbl_cacador.styles.margin = (
+                Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
 
     def action_down(self):
         if Init.pode_movimentar:
-            if Init.cacador_padding[2] > 0:
-                Init.cacador_padding[2] -= 1
+            if Init.cacador_margin[2] > 0:
+                Init.cacador_margin[2] -= 1
             else:
-                Init.cacador_padding[0] += 1
-            Init.lbl_cacador.styles.padding = (
-                Init.cacador_padding[0], Init.cacador_padding[1], Init.cacador_padding[2], Init.cacador_padding[3])
+                Init.cacador_margin[0] += 1
+            Init.lbl_cacador.styles.margin = (
+                Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])

@@ -5,7 +5,7 @@ class Init:
 
     lbl_cacador = Label() 
 
-    cacador_padding = [0, 0, 0, 0]
+    cacador_margin = [0, 0, 0, 0]
     zumbi_morto = False
     pode_movimentar = True
     pode_agir = False

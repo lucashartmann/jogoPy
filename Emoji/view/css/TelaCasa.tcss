@@ -1,0 +1,43 @@
+TelaCasa {
+    layers: below above;
+}
+
+#cacador {
+    layer: above;
+}
+
+.itens {
+    layer: below;
+}
+
+Container {
+    align: center middle;
+    border: green;
+    background: rgba(78, 78, 78, 1);
+    width: 60%;
+    height: 60%;
+}
+
+#vaso {
+    margin-left: 50;
+}
+
+#tv {
+    margin-right: 20;
+}
+
+#cama {
+    margin-bottom: 13;
+}
+
+#item {
+    
+}
+
+#banheiro {
+    margin-left: 50;
+}
+
+#escada {
+    margin-left: 50;
+}
