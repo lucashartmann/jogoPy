@@ -45,9 +45,6 @@ ListItem {
         max-height: 1;
 }
 
-#cacador {
-    padding: 0 0 0 0;
-}
 
 .caminho {
     padding: 7 0 0 0;

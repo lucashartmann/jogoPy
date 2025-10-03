@@ -1,0 +1,36 @@
+#cacador {
+    # margin = (top, right, bottom, left)
+    margin: 4 0 0 0;
+    layer: above;
+    width: 6;
+}
+
+#cacador Image {
+    width: 6;
+    height: 3;
+}
+
+#stt_chave {
+    margin: 5 0 0 20;
+    layer: above;
+    background: white;
+    width: 4;
+}
+
+#stt_chave Image {
+    width: 4;
+    height: 2;
+}
+
+#img_plano_fundo {
+    height: 100%;
+    width: 100%;
+    layer: below;
+}
+
+
+Container {
+    layers: below above;
+    width: 100%;
+    height: 100%;
+}

@@ -8,6 +8,13 @@ class Personagem():
         self.item_equipado = None
         self.vida = 100
         self.icone = ""
+        self.imagem = ""
+
+    def get_imagem(self):
+        return self.imagem
+    
+    def set_imagem(self, nova_imagem):
+        self.imagem = nova_imagem
 
     def get_vida(self):
         return self.vida

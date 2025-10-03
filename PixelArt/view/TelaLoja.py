@@ -10,7 +10,7 @@ import platform
 
 
 class TelaLoja(Screen):
-    CSS_PATH = "css/TelaLoja.tcss"
+    CSS_PATH = ["css/TelaLoja.tcss", "css/Base.tcss"]
 
     cacador_padding = [0, 0, 0, 0]
 

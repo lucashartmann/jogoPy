@@ -15,8 +15,8 @@ class TelaConfig(Screen):
         with HorizontalGroup():
             with VerticalGroup():
                 yield Input(placeholder="caminho", id="inpt_caminho")
-                yield Input(placeholder="width", id="inpt_width")
-                yield Input(placeholder="height", id="inpt_height")
+                yield Input(placeholder="width", classes="ipt_size")
+                yield Input(placeholder="height", classes="ipt_size")
             yield HorizontalGroup(id="hg_resultado")
         with HorizontalGroup():
             yield Label()

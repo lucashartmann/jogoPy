@@ -1,20 +1,26 @@
-from models import Init
 from textual.widgets import Static
 from textual_image.widget import Image
+import io
 
-lbl_image = Image("assets/personagem.png")
-lbl_image.styles.width = 5
-lbl_image.styles.height = 3
+with open("assets/personagem.png", 'rb') as file:
+            blob = file.read()
+
+lbl_image = Image(io.BytesIO(blob), id="image_cacador")
 lbl_cacador = Static(id="cacador")
-lbl_image.styles.width = 5
-lbl_image.styles.height = 3
 
-lbl_chave_image = Image("assets/chave.png")
-lbl_chave_image.styles.width = 30
-lbl_chave_image.styles.height = 30
-lbl_chave = Static(id=f"{Init.chave.get_nome()}")
-lbl_chave.styles.width = 30
-lbl_chave.styles.height = 30
+with open("assets/chave.png", 'rb') as file:
+            blob = file.read()
+lbl_chave_image = Image(io.BytesIO(blob))
+lbl_chave = Static(id="stt_chave")
+
+with open("assets/coracao.png", 'rb') as file:
+            blob = file.read()
+image_coracao = Image(io.BytesIO(blob))
+stt_coracao = Static(Image, id="stt_coracao")
+
+
+image_plano_fundo = Image("assets/plano_fundo.png", id="img_plano_fundo")
+stt_plano_fundo = Static(id="stt_plano_fundo")
 
 # lbl_zumbi = Static(Controller.gerar_pixel(
     # "", 8), id="zumbi")

@@ -1,6 +1,11 @@
+.ipt_size {
+    margin: 2;
+    width: 20%;
+}
+
 Input {
     margin: 2;
-    width: 10%;
+    min-width: 70%;
 }
 
 #hg_resultado {

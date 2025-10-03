@@ -1,15 +1,14 @@
-from textual.widgets import Footer, Header, Static
-from textual.containers import HorizontalGroup
+from textual.widgets import Footer, Header
 from textual.events import Key
 from asyncio import sleep
 from textual import work
 from textual.screen import Screen
 from models import Init
 from config import Assets
-
+from textual.containers import Container
 
 class FaseInicial(Screen):
-    CSS_PATH = "css/FaseInicial.tcss"
+    CSS_PATH = ["css/FaseInicial.tcss", "css/Base.tcss"]
 
     def on_mount(self):
         # self.app.tela_morte()
@@ -19,8 +18,10 @@ class FaseInicial(Screen):
 
     def compose(self):
         yield Header(show_clock=False)
-        yield Assets.lbl_chave
-        yield Assets.lbl_cacador
+        with Container():
+            yield Assets.image_plano_fundo
+            yield Assets.lbl_chave
+            yield Assets.lbl_cacador
             # yield Assets.lbl_zumbi
             # yield Assets.lbl_porta
             # yield Assets.lbl_espada
@@ -101,51 +102,51 @@ class FaseInicial(Screen):
             match lbl.id:
                 case "zumbi":
                     if "chave" not in Init.cacador.inventario:
-                        if Init.cacador_padding == [0, 0, 0, 62]:
+                        if Init.cacador_margin == [0, 0, 0, 62]:
                             self.notify("Zumbi encontrado")
                             Init.pode_agir = True
                             Init.objeto_iteracao = "zumbi"
                     else:
-                        if Init.cacador_padding == [0, 0, 0, 41]:
+                        if Init.cacador_margin == [0, 0, 0, 41]:
                             self.notify("Zumbi encontrado")
                             Init.pode_agir = True
                             Init.objeto_iteracao = "zumbi"
 
                 case "chave":
-                    if Init.cacador_padding == [0, 0, 0, 20]:
+                    if Init.cacador_margin == [0, 0, 0, 20]:
                         Init.objeto_iteracao = "chave"
                         Init.pode_agir = True
                         self.notify("Chave encontrada")
 
                 case "espada":
                     if "chave" not in Init.cacador.inventario:
-                        if Init.cacador_padding == [0, 0, 0, 142]:
+                        if Init.cacador_margin == [0, 0, 0, 142]:
                             self.notify("Espada encontrada")
                             Init.pode_agir = True
                             Init.objeto_iteracao = "espada"
                     else:
-                        if Init.cacador_padding == [0, 0, 0, 123]:
+                        if Init.cacador_margin == [0, 0, 0, 123]:
                             self.notify("Espada encontrada")
                             Init.pode_agir = True
                             Init.objeto_iteracao = "espada"
 
         if Init.zumbi_morto == False and "chave" not in Init.cacador.inventario:
-            if Init.cacador_padding == [0, 0, 0, 114]:
+            if Init.cacador_margin == [0, 0, 0, 114]:
                 Init.objeto_iteracao = "porta"
                 Init.pode_agir = True
                 self.notify("Porta encontrada")
         elif Init.zumbi_morto == True and "chave" in Init.cacador.inventario:
-            if Init.cacador_padding == [0, 0, 0, 49]:
+            if Init.cacador_margin == [0, 0, 0, 49]:
                 Init.objeto_iteracao = "porta"
                 Init.pode_agir = True
                 self.notify("Porta encontrada")
         elif Init.zumbi_morto == True:
-            if Init.cacador_padding == [0, 0, 0, 72]:
+            if Init.cacador_margin == [0, 0, 0, 72]:
                 Init.objeto_iteracao = "porta"
                 Init.pode_agir = True
                 self.notify("Porta encontrada")
         elif "chave" in Init.cacador.inventario:
-            if Init.cacador_padding == [0, 0, 0, 92]:
+            if Init.cacador_margin == [0, 0, 0, 92]:
                 Init.objeto_iteracao = "porta"
                 Init.pode_agir = True
                 self.notify("Porta encontrada")
