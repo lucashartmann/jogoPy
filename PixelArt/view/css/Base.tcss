@@ -1,8 +1,10 @@
 #cacador {
     # margin = (top, right, bottom, left)
     margin: 4 0 0 0;
-    layer: above;
     width: 6;
+    layer: above;
+    dock: none;
+    position: absolute;
 }
 
 #cacador Image {
@@ -12,7 +14,6 @@
 
 #stt_chave {
     margin: 5 0 0 20;
-    layer: above;
     background: white;
     width: 4;
 }
@@ -22,15 +23,64 @@
     height: 2;
 }
 
-#img_plano_fundo {
-    height: 100%;
-    width: 100%;
-    layer: below;
+
+
+#stt_morte{
+    align: center middle;
+    text-style: blink;
+    color: black;
+    content-align: center middle;
+}
+
+#bt_morte{
+    align: center middle;
+    background: black;
+    content-align: center middle;
+    margin-left: 20;
+    margin-top: 2;
 }
 
 
-Container {
-    layers: below above;
-    width: 100%;
-    height: 100%;
+#zumbi {
+    margin: 5 0 0 40;
+}
+
+#porta {
+    margin: 5 0 0 50;
+}
+
+
+#espada {
+    margin: 5 0 0 30;
+}
+
+#inventario {
+    width: 50;
+    height: 13;
+    background: #534a4a19;
+    layout: grid;
+    border: solid blue;
+    color: white;
+    grid-size: 2 0;
+    grid-gutter: 1;
+    content-align: left middle;
+}
+
+.item_inventario {
+    color: white;
+    background: #534a4a9f;
+    height: 50%;
+    align: center middle;
+    content-align: center middle;
+    border: solid white;
+}
+
+#container_morte {
+    background: #c11c1c9f;
+    color: black;
+    content-align: center middle;
+    align: center middle;
+    width: 50%;
+    height: 50%;
+    margin-left: 60;
 }
