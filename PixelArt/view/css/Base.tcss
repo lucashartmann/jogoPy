@@ -3,11 +3,13 @@
     margin: 4 0 0 0;
     layer: above;
     width: 6;
+    background: transparent;
 }
 
 #cacador Image {
     width: 6;
     height: 3;
+    background: transparent;
 }
 
 #stt_chave {
@@ -15,11 +17,13 @@
     layer: above;
     background: white;
     width: 4;
+    background: transparent;
 }
 
 #stt_chave Image {
     width: 4;
     height: 2;
+    background: transparent;
 }
 
 #img_plano_fundo {
