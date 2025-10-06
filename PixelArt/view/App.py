@@ -5,7 +5,7 @@ from textual.widgets import Static, Header, Button
 from view import TelaLoja, TelaInicial, FaseInicial, TelaConfig
 from models import Init
 from textual_image.widget import Image
-
+from config import Terminal
 
 class Jogo(App):
 
@@ -25,7 +25,7 @@ class Jogo(App):
         Binding("z", "a1", "Interagir"),
         Binding("c", "c", "Abrir inventário"),
         Binding("x", "x", "Equipar item"),
-        Binding("q", "exit", "Encerrar")
+        Binding("ctrl+q", "exit", "Encerrar")
     ]
 
     def on_mount(self):
@@ -43,6 +43,7 @@ class Jogo(App):
             Init.inventario_aberto = True
 
     def action_exit(self):
+        Terminal.remove_background_image()
         self.app.exit()
 
     def atualizar_header(self):

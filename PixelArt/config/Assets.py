@@ -1,11 +1,12 @@
 from textual.widgets import Static
 from textual_image.widget import Image
 import io
+from view.widgets import Gif
 
-with open("assets/personagem.png", 'rb') as file:
+with open("assets/Entities/Npc's/Knight/Run/Run.aseprite", 'rb') as file:
             blob = file.read()
 
-lbl_image = Image(io.BytesIO(blob), id="image_cacador")
+lbl_image = Gif.Gif(r"C:\Users\LUCASAUGUSTOHARTMANN\Downloads\jogoPy\PixelArt\assets\Entities\Characters\Carry_Idle\Carry_Idle_Down.aseprite", id="image_cacador")
 lbl_cacador = Static(id="cacador")
 
 with open("assets/chave.png", 'rb') as file:

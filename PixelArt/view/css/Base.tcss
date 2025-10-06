@@ -2,25 +2,26 @@
     # margin = (top, right, bottom, left)
     margin: 4 0 0 0;
     width: 6;
-    layer: above;
-    dock: none;
-    position: absolute;
+    background: transparent;
 }
 
 #cacador Image {
     width: 6;
     height: 3;
+    background: transparent;
 }
 
 #stt_chave {
     margin: 5 0 0 20;
     background: white;
     width: 4;
+    background: transparent;
 }
 
 #stt_chave Image {
     width: 4;
     height: 2;
+    background: transparent;
 }
 
 

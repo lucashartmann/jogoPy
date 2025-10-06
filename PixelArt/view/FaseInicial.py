@@ -4,24 +4,22 @@ from asyncio import sleep
 from textual import work
 from textual.screen import Screen
 from models import Init
-from config import Assets
-from textual.containers import Container
+from config import Assets, Terminal
 
 class FaseInicial(Screen):
     CSS_PATH = ["css/FaseInicial.tcss", "css/Base.tcss"]
 
     def on_mount(self):
         # self.app.tela_morte()
+        Terminal.set_background_image(f"{Init.caminho_assets}\\0EmHFB.png")
         self.app.atualizar_header()    
         self.query_one(f"#{Assets.lbl_chave.id}").mount(Assets.lbl_chave_image)
         self.query_one(f"#{Assets.lbl_cacador.id}").mount(Assets.lbl_image)
 
     def compose(self):
         yield Header(show_clock=False)
-        with Container():
-            yield Assets.image_plano_fundo
-            yield Assets.lbl_chave
-            yield Assets.lbl_cacador
+        yield Assets.lbl_chave
+        yield Assets.lbl_cacador
             # yield Assets.lbl_zumbi
             # yield Assets.lbl_porta
             # yield Assets.lbl_espada

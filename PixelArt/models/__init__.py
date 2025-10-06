@@ -1,5 +1,6 @@
 from models import Item, Cena, Personagem
 from config import Assets
+import os
 
 class Init:
 
@@ -9,6 +10,8 @@ class Init:
     pode_agir = False
     objeto_iteracao = ""
     inventario_aberto = False
+
+    caminho_assets = f"{os.getcwd()}\\assets\\"
 
     sala_inicial = Cena.Cena("Sala Inicial")
 
