@@ -18,10 +18,8 @@ class FaseInicial(Screen):
 
     def compose(self):
         yield Header(show_clock=False)
-        with Container():
-            yield Assets.image_plano_fundo
-            yield Assets.lbl_chave
-            yield Assets.lbl_cacador
+        yield Assets.lbl_chave
+        yield Assets.lbl_cacador
             # yield Assets.lbl_zumbi
             # yield Assets.lbl_porta
             # yield Assets.lbl_espada

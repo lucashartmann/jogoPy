@@ -1,0 +1,1 @@
+Quando mudar a tela alterar o json do terminal para mudar o fundo dele
