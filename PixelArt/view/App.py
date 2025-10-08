@@ -6,6 +6,8 @@ from view import TelaLoja, TelaInicial, FaseInicial, TelaConfig
 from models import Init
 from textual_image.widget import Image
 from config import Terminal
+from view.widgets import Gif
+
 
 class Jogo(App):
 
@@ -54,10 +56,15 @@ class Jogo(App):
             self.title = f"Item equipado: Nenhum"
 
     def action_x(self):
+        self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Crush_Base\Crush_Side-Sheet.png")
+        self.screen.query_one("#cacador", Gif.Gif).styles.width = 31
+        
+        
         if Init.cacador.inventario:
             lista_items = list(Init.cacador.inventario.keys())
             Init.cacador.equipar_item(lista_items[Init.contador])
             self.atualizar_header()
+            
             self.notify(
                 f"Item equipado: {Init.cacador.item_equipado.get_nome()}")
             Init.contador -= 1
@@ -99,6 +106,8 @@ class Jogo(App):
                 Init.cacador_margin[3] -= 1
             else:
                 Init.cacador_margin[1] += 1
+                
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Side-Sheet.png")
 
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
@@ -114,6 +123,8 @@ class Jogo(App):
                 Init.cacador_margin[1] -= 1
             else:
                 Init.cacador_margin[3] += 1
+                
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Side-Sheet.png")
 
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
@@ -129,6 +140,9 @@ class Jogo(App):
                 Init.cacador_margin[0] -= 1
             else:
                 Init.cacador_margin[2] += 1
+                
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Up-Sheet.png")
+
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
 
@@ -138,5 +152,8 @@ class Jogo(App):
                 Init.cacador_margin[2] -= 1
             else:
                 Init.cacador_margin[0] += 1
+                
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Down-Sheet.png")
+
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])

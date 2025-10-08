@@ -1,15 +1,19 @@
 #cacador {
     # margin = (top, right, bottom, left)
     margin: 4 0 0 0;
-    width: 6;
-    background: transparent;
+    width: 16;
+    height: 13;
+    background: 0%;
 }
 
-#cacador Image {
-    width: 6;
-    height: 3;
-    background: transparent;
+
+#cacador TextualImage{
+    width: 100%;
+    height: 30;
+    margin-left:3;
+    background: 0%;
 }
+
 
 #stt_chave {
     margin: 5 0 0 20;

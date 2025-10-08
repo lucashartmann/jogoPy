@@ -16,7 +16,7 @@ class Init:
     sala_inicial = Cena.Cena("Sala Inicial")
 
     cacador = Personagem.Personagem()
-    cacador.set_imagem(Assets.lbl_image)
+    # cacador.set_imagem(Assets.lbl_image)
     cacador.sala = sala_inicial
 
     contador = len(list(cacador.inventario.keys())) - 1

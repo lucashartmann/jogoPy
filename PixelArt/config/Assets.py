@@ -2,12 +2,12 @@ from textual.widgets import Static
 from textual_image.widget import Image
 import io
 from view.widgets import Gif
+import os
 
 with open("assets/Entities/Npc's/Knight/Run/Run.aseprite", 'rb') as file:
             blob = file.read()
 
-lbl_image = Gif.Gif(r"C:\Users\LUCASAUGUSTOHARTMANN\Downloads\jogoPy\PixelArt\assets\Entities\Characters\Carry_Idle\Carry_Idle_Down.aseprite", id="image_cacador")
-lbl_cacador = Static(id="cacador")
+lbl_cacador = Gif.Gif(r"assets\Entities\Characters\Carry_Idle\Carry_Idle_Down-Sheet.png", id="cacador", pixel=True)
 
 with open("assets/chave.png", 'rb') as file:
             blob = file.read()

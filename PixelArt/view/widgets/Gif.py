@@ -1,14 +1,14 @@
-import subprocess
-import json
 from PIL import Image
+from PIL.Image import Resampling
 from textual.widget import Widget
 from textual.timer import Timer
 from textual.widgets import Static
 from textual_image.widget import Image as TextualImage
-from textual.containers import VerticalGroup
 from rich_pixels import Pixels
+from textual.containers import Container
 
-class Gif(Widget):
+
+class Gif(Static):
     def __init__(self, aseprite_path, pixel=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.pixel = pixel
@@ -19,49 +19,39 @@ class Gif(Widget):
         self.timer: Timer | None = None
         self.paused = False
 
+    def set_sprite(self, caminho):
+        self.sprite = caminho
+        self.frames, self.durations = self.extract_frames_from_aseprite(
+            caminho)
+
     @staticmethod
-    def extract_frames_from_aseprite(aseprite_file: str, output_prefix="temp"):
-        sheet_path = f"{output_prefix}.png"
-        data_path = f"{output_prefix}.json"
-
-        subprocess.run([
-            "aseprite", "-b", aseprite_file,
-            "--sheet", sheet_path,
-            "--data", data_path,
-            "--sheet-pack",
-            "--format", "json-array"
-        ], check=True)
-
+    def extract_frames_from_aseprite(sheet_path: str, frame_width=64, frame_height=64):
         sheet = Image.open(sheet_path)
-        with open(data_path, "r") as f:
-            data = json.load(f)
+        sheet_width, sheet_height = sheet.size
 
         frames = []
         durations = []
 
-        for frame_info in data["frames"]:
-            rect = frame_info["frame"]
-            duration = frame_info["duration"]
+        cols = sheet_width // frame_width
+
+        for x in range(cols):
             box = (
-                rect["x"],
-                rect["y"],
-                rect["x"] + rect["w"],
-                rect["y"] + rect["h"]
+                x * frame_width + 24,
+                18,
+                (x + 1) * frame_width,
+                frame_height
             )
             frame = sheet.crop(box)
+            frame = frame.resize((40, 40), resample=Resampling.NEAREST)
             frames.append(frame)
-            durations.append(duration)
+            durations.append(110)
 
         return frames, durations
 
-    def compose(self):
-        with VerticalGroup(id="video_container"):
-            if self.pixel:
-                yield Static(Pixels.from_image(self.frames[0]), id="video_pixels")
-            else:
-                yield TextualImage(self.frames[0])
+    
 
     def on_mount(self):
+        
         self.start()
 
     def start(self):
@@ -80,17 +70,15 @@ class Gif(Widget):
                 self.paused = True
 
     def _current_interval(self):
-        return self.durations[self.frame_index] / 1000 
+        return self.durations[self.frame_index] / 1000
 
     def update_frame(self):
         self.frame_index = (self.frame_index + 1) % len(self.frames)
         frame = self.frames[self.frame_index]
 
         if self.pixel:
-            self.query_one(Static).update(Pixels.from_image(frame))
-        else:
-            self.query_one(TextualImage).image = frame
+            self.update(Pixels.from_image(frame))
+        
 
         self.timer.pause()
-        self.timer.set_interval(self._current_interval())
         self.timer.resume()

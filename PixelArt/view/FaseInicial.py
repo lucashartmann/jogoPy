@@ -5,16 +5,16 @@ from textual import work
 from textual.screen import Screen
 from models import Init
 from config import Assets, Terminal
-
+import os 
 class FaseInicial(Screen):
     CSS_PATH = ["css/FaseInicial.tcss", "css/Base.tcss"]
 
     def on_mount(self):
         # self.app.tela_morte()
-        Terminal.set_background_image(f"{Init.caminho_assets}\\0EmHFB.png")
+        Terminal.set_background_image(f"{os.getcwd()}\\assets\\0EmHFB.png")
+        
         self.app.atualizar_header()    
         self.query_one(f"#{Assets.lbl_chave.id}").mount(Assets.lbl_chave_image)
-        self.query_one(f"#{Assets.lbl_cacador.id}").mount(Assets.lbl_image)
 
     def compose(self):
         yield Header(show_clock=False)
