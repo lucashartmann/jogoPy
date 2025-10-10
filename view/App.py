@@ -7,8 +7,8 @@ from models import Init
 from textual_image.widget import Image
 from config import Terminal
 from view.widgets import Gif
-
-
+import asyncio
+   
 class Jogo(App):
 
     SCREENS = {
@@ -95,8 +95,8 @@ class Jogo(App):
             for screen in self.screen_stack:
                 screen.remove()
             self.reiniciar()
-            self.push_screen("tela_inicial")
-
+            self.push_screen("tela_inicial")    
+   
     def action_left(self):
         if Init.pode_movimentar:
             if Init.cacador_margin[3] > 0:
@@ -104,16 +104,12 @@ class Jogo(App):
             else:
                 Init.cacador_margin[1] += 1
                 
-            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Walk_Base\Walk_Side-Sheet.png")
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Walk_Base\Walk_OtherSide-Sheet.png")
 
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
-
-            try:
-                self.screen.query_one("#img_plano_fundo", Image).refresh()
-            except:
-                pass
-
+            
+    
     def action_right(self):
         if Init.pode_movimentar:
             if Init.cacador_margin[1] > 0:
@@ -126,10 +122,7 @@ class Jogo(App):
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
 
-            try:
-                self.screen.query_one("#img_plano_fundo", Image).refresh()
-            except:
-                pass
+           
 
     def action_up(self):
         if Init.pode_movimentar:

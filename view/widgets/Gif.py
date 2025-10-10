@@ -43,15 +43,13 @@ class Gif(Static):
             )
             frame = sheet.crop(box)
             frame = frame.resize((40, 40), resample=Resampling.NEAREST)
-            frames.append(frame)
+            pixels = Pixels.from_image(frame)
+            frames.append(pixels)
             durations.append(110)
 
         return frames, durations
 
-    
-
     def on_mount(self):
-        
         self.start()
 
     def start(self):
@@ -76,9 +74,7 @@ class Gif(Static):
         self.frame_index = (self.frame_index + 1) % len(self.frames)
         frame = self.frames[self.frame_index]
 
-        if self.pixel:
-            self.update(Pixels.from_image(frame))
-        
+        self.update((frame))
 
         self.timer.pause()
         self.timer.resume()
