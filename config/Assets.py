@@ -4,8 +4,6 @@ import io
 from view.widgets import Gif
 import os
 
-with open("assets/Entities/Npc's/Knight/Run/Run.aseprite", 'rb') as file:
-            blob = file.read()
 
 lbl_cacador = Gif.Gif(r"assets\Entities\Characters\Carry_Idle\Carry_Idle_Down-Sheet.png", id="cacador", pixel=True)
 

@@ -56,7 +56,7 @@ class Jogo(App):
             self.title = f"Item equipado: Nenhum"
 
     def action_x(self):
-        self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Crush_Base\Crush_Side-Sheet.png")
+        self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Crush_Base\Crush_Side-Sheet.png")
         self.screen.query_one("#cacador", Gif.Gif).styles.width = 31
         
         
@@ -107,7 +107,7 @@ class Jogo(App):
             else:
                 Init.cacador_margin[1] += 1
                 
-            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Side-Sheet.png")
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Walk_Base\Walk_Side-Sheet.png")
 
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
@@ -124,7 +124,7 @@ class Jogo(App):
             else:
                 Init.cacador_margin[3] += 1
                 
-            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Side-Sheet.png")
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Walk_Base\Walk_Side-Sheet.png")
 
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
@@ -141,7 +141,7 @@ class Jogo(App):
             else:
                 Init.cacador_margin[2] += 1
                 
-            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Up-Sheet.png")
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Walk_Base\Walk_Up-Sheet.png")
 
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
@@ -153,7 +153,7 @@ class Jogo(App):
             else:
                 Init.cacador_margin[0] += 1
                 
-            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"C:\Users\dudua\Music\Projetos\jogoPy\PixelArt\assets\Entities\Characters\Walk_Base\Walk_Down-Sheet.png")
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Walk_Base\Walk_Down-Sheet.png")
 
             self.screen.query_one("#cacador").styles.margin = (
                 Init.cacador_margin[0], Init.cacador_margin[1], Init.cacador_margin[2], Init.cacador_margin[3])
