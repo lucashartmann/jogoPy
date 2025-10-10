@@ -7,19 +7,23 @@ import os
 
 lbl_cacador = Gif.Gif(r"assets\Entities\Characters\Carry_Idle\Carry_Idle_Down-Sheet.png", id="cacador", pixel=True)
 
-with open("assets/chave.png", 'rb') as file:
+with open(r"assets/chave.png", 'rb') as file:
             blob = file.read()
 lbl_chave_image = Image(io.BytesIO(blob))
 lbl_chave = Static(id="stt_chave")
 
-with open("assets/coracao.png", 'rb') as file:
+with open(r"assets/coracao.png", 'rb') as file:
             blob = file.read()
 image_coracao = Image(io.BytesIO(blob))
 stt_coracao = Static(Image, id="stt_coracao")
 
 
-image_plano_fundo = Image("assets/plano_fundo.png", id="img_plano_fundo")
+image_plano_fundo = Image(r"assets/plano_fundo.png", id="img_plano_fundo")
 stt_plano_fundo = Static(id="stt_plano_fundo")
+
+with open(r"assets\Weapons\Bone\Foice.png", 'rb') as file:
+            blob = file.read()
+image_foice = Image(io.BytesIO(blob))
 
 # lbl_zumbi = Static(Controller.gerar_pixel(
     # "", 8), id="zumbi")

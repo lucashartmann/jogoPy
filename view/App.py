@@ -56,18 +56,15 @@ class Jogo(App):
             self.title = f"Item equipado: Nenhum"
 
     def action_x(self):
-        self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Crush_Base\Crush_Side-Sheet.png")
-        self.screen.query_one("#cacador", Gif.Gif).styles.width = 31
-        
         
         if Init.cacador.inventario:
             lista_items = list(Init.cacador.inventario.keys())
-            Init.cacador.equipar_item(lista_items[Init.contador])
-            self.atualizar_header()
-            
-            self.notify(
-                f"Item equipado: {Init.cacador.item_equipado.get_nome()}")
-            Init.contador -= 1
+            if Init.cacador.item_equipado.nome != lista_items[Init.contador]:
+                Init.cacador.equipar_item(lista_items[Init.contador])
+                self.atualizar_header()
+                self.notify(
+                    f"Item equipado: {Init.cacador.item_equipado.get_nome()}")
+                Init.contador -= 1
             if Init.contador < 0:
                 Init.contador = len(lista_items) - 1
         else:

@@ -6,7 +6,10 @@ from textual.screen import Screen
 from models import Init
 from config import Assets, Terminal
 import os 
+from view.widgets import Gif
+
 class FaseInicial(Screen):
+    
     CSS_PATH = ["css/FaseInicial.tcss", "css/Base.tcss"]
 
     def on_mount(self):
@@ -27,43 +30,45 @@ class FaseInicial(Screen):
 
     @work
     async def acoes(self, evento):
-        if evento.key == "z" and Init.objeto_iteracao != "":
+        if evento.key == "z":
             Init.pode_movimentar = False
-            match Init.objeto_iteracao:
-                case "zumbi":
-                    if Init.cacador.item_equipado:
-                        if Init.cacador.item_equipado.get_categoria() == "arma":
-                            self.notify(
-                                "Entrando em combate com o zumbi")
-                            await sleep(1)
-                            self.combate()
-                        else:
-                            self.notify(
-                                "Você precisa de uma arma para iniciar o combate")
-                    else:
-                        self.notify(
-                            "Você precisa de um item equipado para iniciar o combate")
+            self.screen.query_one("#cacador", Gif.Gif).set_sprite(r"assets\Entities\Characters\Crush_Base\Crush_Side-Sheet.png")
+            self.screen.query_one("#cacador", Gif.Gif).styles.width = 31
+            # match Init.objeto_iteracao:
+            #     case "zumbi":
+            #         if Init.cacador.item_equipado:
+            #             if Init.cacador.item_equipado.get_categoria() == "arma":
+            #                 self.notify(
+            #                     "Entrando em combate com o zumbi")
+            #                 await sleep(1)
+            #                 self.combate()
+            #             else:
+            #                 self.notify(
+            #                     "Você precisa de uma arma para iniciar o combate")
+            #         else:
+            #             self.notify(
+            #                 "Você precisa de um item equipado para iniciar o combate")
 
-                case "porta":
-                    if Init.cacador.item_equipado:
-                        if Init.cacador.item_equipado.get_nome() == "chave":
-                            self.app.switch_screen("tela_loja")
-                        else:
-                            self.notify(
-                                "Você precisa da chave para abrir a porta")
-                    else:
-                        self.notify(
-                            "Você precisa de um item equipado para abrir a porta")
+            #     case "porta":
+            #         if Init.cacador.item_equipado:
+            #             if Init.cacador.item_equipado.get_nome() == "chave":
+            #                 self.app.switch_screen("tela_loja")
+            #             else:
+            #                 self.notify(
+            #                     "Você precisa da chave para abrir a porta")
+            #         else:
+            #             self.notify(
+            #                 "Você precisa de um item equipado para abrir a porta")
 
-                case "chave" | "espada":
-                    if Init.pode_agir:
-                        self.notify(
-                            f"{Init.objeto_iteracao.capitalize()} coletada")
-                        Init.cacador.coletar_item(Init.objeto_iteracao)
-                        Init.contador = len(
-                            list(Init.cacador.inventario.keys())) - 1
-                        self.query_one(
-                            f"#{Init.objeto_iteracao}").remove()
+            #     case "chave" | "espada":
+            #         if Init.pode_agir:
+            #             self.notify(
+            #                 f"{Init.objeto_iteracao.capitalize()} coletada")
+            #             Init.cacador.coletar_item(Init.objeto_iteracao)
+            #             Init.contador = len(
+            #                 list(Init.cacador.inventario.keys())) - 1
+            #             self.query_one(
+            #                 f"#{Init.objeto_iteracao}").remove()
             Init.pode_movimentar = True
 
     @work

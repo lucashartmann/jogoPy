@@ -32,6 +32,17 @@ class Init:
     chave.set_quant(1)
 
     sala_inicial.colocar_item(chave)
+    
+    picareta = Item.Item()
+    picareta.set_nome("picareta")
+    picareta.set_categoria("arma")
+    chave.set_imagem(Assets.image_foice)
+    picareta.set_dano(5)
+    picareta.set_protecao(0)
+    picareta.set_genero_objeto("feminino")
+    picareta.set_quant(1)
+    picareta.set_icon("⛏️")
+    
 
     # espada = Item.Item()
     # espada.set_nome("espada")
@@ -42,7 +53,10 @@ class Init:
     # espada.set_genero_objeto("feminino")
     # espada.set_quant(1)
 
-    # sala_inicial.colocar_item(espada)
+    sala_inicial.colocar_item(chave)
+    
+    cacador.inventario["picareta"] = picareta
+    cacador.item_equipado = picareta
 
     coracao = Item.Item()
     coracao.set_nome("coracao")
